@@ -1,17 +1,23 @@
 #include "libft.h"
 #include <stdio.h>
 
-char my_func(unsigned int i, char str)
+int		main(void)
 {
-	printf("My inner function: index = %d and %c\n", i, str);
-	return str - 32;
+	int i = 0;
+	char **tab;
+		
+	tab = ft_split("bonjour##je##m'appel##Arthur", '#');
+	while (i < 4)
+	{
+		printf("string %d : %s\n", i, tab[i]);
+		i++;
+	}
+	return (0);
 }
 
-int main()
-{
- 	char str[10] = "hello.";
-	printf("The result is %s\n", str);
-	char *result = ft_strmapi(str, my_func);
-	printf("The result is %s\n", result);
-	return 0;
-}
+// display k
+// display src[k]
+// display i
+// display dest[i]
+// display start
+// display len

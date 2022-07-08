@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 21:09:53 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/07 06:52:34 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/08 03:19:03 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void ft_word(char **dest, char const *src, char c) //alocar as 'palavras'
 	unsigned int k;
 	size_t len;
 	unsigned int start;
-	unsigned int i;
+	int i;
 
 	i = 0;
 	k = 0;
@@ -25,6 +25,12 @@ static void ft_word(char **dest, char const *src, char c) //alocar as 'palavras'
 	start = 0;
 	while (src[k] != '\0')
 	{
+		start = k; //valor da 2a palavra tem que seguir o k para não repetir
+		if (k == 0 && src[k] == c)
+		{
+			start++;
+			k++;
+		}
 		while (src[k] == c)
 		{
 			start++;
@@ -37,9 +43,13 @@ static void ft_word(char **dest, char const *src, char c) //alocar as 'palavras'
 			k++;
 		}
 		dest[i] = ft_substr(src, start, len);
+		len = 0;
 		i++;
+		if (src[k] != 0)
+			k++;
 	}
-	dest[i] = NULL;// list[j][n] = NULL; //fim da string
+	i--;
+	dest[i] = NULL;////fim da string
 }
 
 char	**ft_split(char const *s, char c) //list = {"str1", "str2", "str3", ... "strn", NULL};
@@ -67,5 +77,3 @@ char	**ft_split(char const *s, char c) //list = {"str1", "str2", "str3", ... "st
 	ft_word(list, s, c);
 	return (list);//retorno "string de string" -> cada string em uma posição
 }
-
-
