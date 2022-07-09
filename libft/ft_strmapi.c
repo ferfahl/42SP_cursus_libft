@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 21:13:21 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/04 01:53:46 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/09 05:26:43 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	unsigned int count;
-	char *dest;
+	unsigned int	count;
+	char			*dest;
 
 	count = 0;
 	if (!s || !f)

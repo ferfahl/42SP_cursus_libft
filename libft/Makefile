@@ -70,10 +70,5 @@ fclean: clean
 #clear all
 re: fclean all
 
-#REMOVER!!!
-cavalinho: re
-		gcc $(FLAGS) main.c $(NAME) -lbsd && clear && ./a.out
-
 #avoids double inclusion
 .PHONY: all clean fclean re
-
