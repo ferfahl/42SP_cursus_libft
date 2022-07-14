@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 20:26:35 by feralves          #+#    #+#             */
-/*   Updated: 2022/06/19 20:11:16 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:05:35 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 char	*ft_strrchr(const char *s, int c)
 {
 	char	*str;
-	char	*ret;
+	char	*dest;
 
 	str = (char *)s;
-	ret = 0;
+	dest = 0;
 	if ((char)c == '\0')
 		return (&str[ft_strlen(str)]);
 	while (*str != '\0')
 	{
 		if (*str == (char)c)
-			ret = str;
+			dest = str;
 		str++;
 	}
-	return (ret);
+	return (dest);
 }

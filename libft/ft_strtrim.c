@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 21:08:12 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/10 00:53:18 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/14 17:24:50 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (lenght > start && ft_strchr(set, s1[lenght]))
 		lenght--;
 	if (start <= lenght)
-		dest = malloc((++lenght - start) + 1);
+		dest = malloc(((++lenght - start) + 1) * sizeof(*dest));
 	else
 		dest = malloc(1);
 	if (!dest)

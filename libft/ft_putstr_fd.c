@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:20:52 by feralves          #+#    #+#             */
-/*   Updated: 2022/06/19 20:25:09 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:49:22 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,5 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	count;
-
-	count = 0;
-	while (s[count] != '\0')
-	{
-		ft_putchar_fd(s[count], fd);
-		count++;
-	}
+	write(fd, s, ft_strlen(s));
 }

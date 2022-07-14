@@ -6,46 +6,14 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 00:19:50 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/10 01:18:36 by feralves         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/19 21:29:00 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/10 00:19:03 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:45:20 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_counter(int number)
-{
-	int	count;
-
-	count = 1;
-	while (number > 9)
-	{
-		number = number / 10;
-		count++;
-	}
-	return (count);
-}
-
-void	ft_write(int size, int negative, char *string, int n)
-{
-	while (size - negative >= 0)
-	{
-		string[size] = '0' + (n % 10);
-		n = n / 10;
-		size--;
-	}
-}
+static int	ft_counter(int number);
+static void	ft_write(int size, int negative, char *string, int n);
 
 char	*ft_itoa(int n)
 {
@@ -72,4 +40,27 @@ char	*ft_itoa(int n)
 	size--;
 	ft_write(size, negative, string, n);
 	return (string);
+}
+
+static int	ft_counter(int number)
+{
+	int	count;
+
+	count = 1;
+	while (number > 9)
+	{
+		number = number / 10;
+		count++;
+	}
+	return (count);
+}
+
+static void	ft_write(int size, int negative, char *string, int n)
+{
+	while (size - negative >= 0)
+	{
+		string[size] = '0' + (n % 10);
+		n = n / 10;
+		size--;
+	}
 }

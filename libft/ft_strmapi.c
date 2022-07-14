@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 21:13:21 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/09 05:26:43 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:41:24 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	count = 0;
 	if (!s || !f)
 		return (NULL);
-	dest = malloc(ft_strlen(s) + 1);
+	dest = malloc((ft_strlen(s) + 1) * sizeof(*dest));
 	if (!dest)
 		return (NULL);
 	while (s[count] != '\0')

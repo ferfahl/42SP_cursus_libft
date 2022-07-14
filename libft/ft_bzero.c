@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 03:40:52 by feralves          #+#    #+#             */
-/*   Updated: 2022/06/17 02:45:02 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:37:55 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,5 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	unsigned char	*dest;
-
-	dest = s;
-	while (n != 0)
-	{
-		*dest++ = 0;
-		n--;
-	}
+	ft_memset(s, '\0', n);
 }
