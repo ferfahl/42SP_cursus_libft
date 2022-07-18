@@ -1,0 +1,1 @@
+Libft is a library of functions to be made from scratch, just some external functions are available, and many of the functions that were made here are already in some of C's libraries.
