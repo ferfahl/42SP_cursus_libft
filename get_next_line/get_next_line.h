@@ -10,3 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+//Libraries
+//to use malloc & free
+#include <stdlib.h>
+//to use read
+#include <unistd.h>
+
+//Functions
+char    *get_next_line(int fd);
+
+#endif
