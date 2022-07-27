@@ -19,7 +19,10 @@
 //to use read
 #include <unistd.h>
 
+//REMOVER
+#include <stdio.h>
+
 //Functions
-char    *get_next_line(int fd);
+void get_next_line(int fd); //char *
 
 #endif
