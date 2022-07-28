@@ -12,7 +12,6 @@
 
 #include "get_next_line.h"
 
-
 size_t	ft_strlen_mod(const char *str, char a, size_t count)
 {
 	while (str[count] != a)
@@ -28,7 +27,7 @@ void   get_next_line(int fd) //char *
     char *temp;
     static char *rest;
     size_t index;
-    int size;
+    size_t size;
     int second_index;
     int another;
 
@@ -53,22 +52,22 @@ void   get_next_line(int fd) //char *
         dest[index] = temp[index];
         index++;
     }
-    printf("1 index %ld\n size %d\n second_index %d\n", index, size, second_index);
+    printf("1 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
     if (temp[index] != '\0')
     {
         size = ft_strlen_mod(temp, '\n', index);
-        printf("2 index %ld\n size %d\n second_index %d\n", index, size, second_index);
+        printf("2 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
         rest = malloc((size + 1) * sizeof(char));
-        printf("3 index %ld\n size %d\n second_index %d\n", index, size, second_index);
+        printf("3 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
         another = index;
-        printf("4 index %ld\n size %d\n second_index %d\n", index, size, second_index);
+        printf("4 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
         while (temp[index] != '\0')
         {
             rest[second_index] = temp[index];
             index++;
             second_index++;
         }
-        printf("5 index %ld\n size %d\n second_index %d\n", index, size, second_index);
+        printf("5 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
     }
     printf("%s\n\n", rest);
     dest[another] = '\n'; //adicionar um enter a mais na saída do dest
