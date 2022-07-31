@@ -35,6 +35,6 @@
 # define NO_LINE_FEED -1
 
 //Functions
-char *get_next_line(int fd); //char *
+char    *get_next_line(int fd);
 
 #endif
