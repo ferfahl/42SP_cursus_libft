@@ -25,6 +25,19 @@ size_t	ft_strlen_mod(const char *src, char a, size_t count)
 	return (size);
 }
 
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (str[count] != '\0')
+	{
+		count++;
+	}
+	return (count);
+}
+
 void	ft_strlcpy_mod(char *dest, const char *src, char a, size_t index)
 {
 	size_t	count;
@@ -85,13 +98,59 @@ char    *write_rest(char **rest)
     return (dest);
 }
 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*dest;
+	size_t	count;
+	size_t	index;
+
+	count = 0;
+	index = 0;
+	dest = malloc(((ft_strlen(s1) + ft_strlen(s2)) + 1) * sizeof(*dest));
+	if (!dest)
+		return (NULL);
+	while (s1 && s1[count] != '\0')
+	{
+		dest[count] = s1[count];
+		count++;
+	}
+	while (s2[index] != '\0')
+	{
+		dest[count + index] = s2[index];
+		index++;
+	}
+	dest[count + index] = '\0';
+	return (dest);
+}
+
+
+char    *ft_read(int fd, char **rest)
+{
+    char    *temp;
+    char    *new;
+    ssize_t buffer;
+
+    temp = NULL;
+    new = malloc((BUFFER_SIZE + 1) * sizeof(char)); //free no new?
+    if (!new)
+        return (MALLOC_ERROR);
+    buffer = read(fd, new, BUFFER_SIZE);
+    while (buffer > 0)
+    {
+        new[buffer] = '\0';
+        temp = ft_strjoin(temp, new);
+        buffer = read(fd, new, BUFFER_SIZE);
+    }
+    return (temp);
+
+}
 
 char    *get_first_line(int fd, char **rest)
 {
     char *dest;
  	char *temp;
     size_t index;
-    size_t size;
+    size_t size; //trocar por len
 	int	buffer; //ssize_t - aceita sinal
 	
     index = 0;
@@ -100,11 +159,7 @@ char    *get_first_line(int fd, char **rest)
     //fd < 0/
  
     printf("1st test:\nindex %ld size %ld\n", index, size); //tester ints
-    temp = malloc((BUFFER_SIZE + 1) * sizeof(char)); //free no temp quando finalizar pela 1a vez?
-    if (!temp)
-        return (MALLOC_ERROR);
-    buffer = read(fd, temp, BUFFER_SIZE);
-    temp[buffer] = '\0';
+    temp = ft_read(fd, rest);
     printf("TEMP:\n%s\n", temp); //tester temp
     size = ft_strlen_mod(temp, '\n', index);
     printf("2nd test:\nindex %ld size %ld\n", index, size); //tester ints
