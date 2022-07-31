@@ -29,7 +29,7 @@
 
 //define return codes
 # define READ_OK 1
-# define MALLOC_ERROR -1
+# define MALLOC_ERROR NULL
 # define MALLOC_ERROR2 -2
 # define INPUT_ERROR -1
 # define NO_LINE_FEED -1

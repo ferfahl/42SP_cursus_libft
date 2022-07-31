@@ -8,5 +8,13 @@ int main(int argc, char **argv)
 
     fd = open(argv[1], O_RDONLY);
     print = get_next_line(fd);
-    printf("%s", print);
+    printf("1st GNL return: %s", print);
+    print = get_next_line(fd);
+    printf("2nd GNL return: %s", print);
+    print = get_next_line(fd);
+    printf("3rd GNL return: %s", print);
+    print = get_next_line(fd);
+    printf("4th GNL return: %s", print);
+    print = get_next_line(fd);
+    printf("5th GNL return: %s", print);
 }
