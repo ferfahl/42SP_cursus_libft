@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 02:07:10 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/18 02:07:11 by feralves         ###   ########.fr       */
+/*   Updated: 2022/07/31 04:29:21 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,53 +36,60 @@ void	ft_strlcpy_mod(char *dest, const char *src, char a, size_t index)
         count++;
 		index++;
 	}
+	dest[count] = 0;
 }
 
 void   get_next_line(int fd) //char *
 {
     char *dest;
-    char *temp;
-    static char *rest;
+    
+    
     size_t index;
+	char *temp;
     size_t size;
-
+	int	buffer; //ssize_t - aceita sinal
+	char *rest;
+	
     index = 0;
     size = 0;
     //verificações de erro
     //fd < 0/
+//	rest = calloc(1, 1);
+//	temp = calloc(1, 1);
+//	dest = calloc(1, 1);
 /*     if (rest)
     {
-        
+    
     } */
-    printf("1st test:\n index %ld size %ld\n", index, size); //tester ints
+//    printf("1st test:\n index %ld size %ld\n", index, size); //tester ints
     temp = malloc((BUFFER_SIZE + 1) * sizeof(char));
 /*     if (!temp)
         return (MALLOC_ERROR); */
-    read(fd, temp, BUFFER_SIZE);
-    temp[BUFFER_SIZE] = '\0';
-    printf("TEMP:\n %s\n", temp); //tester temp
+    buffer = read(fd, temp, BUFFER_SIZE);
+    temp[buffer] = '\0';
+ //   printf("TEMP:\n %s\n", temp); //tester temp
     size = ft_strlen_mod(temp, '\n', index);
-    printf("2nd test:\n index %ld size %ld\n", index, size); //tester ints
+ //   printf("2nd test:\n index %ld size %ld\n", index, size); //tester ints
     dest = malloc((size + 2) *  sizeof(char));
 /*     if (!dest)
         return (MALLOC_ERROR); */
-    ft_strlcpy_mod(dest, temp, index, '\n');
-    printf("DEST:\n %s\n", dest);
+    ft_strlcpy_mod(dest, temp, '\n', index);
+ //   printf("DEST:\n %s\n", dest);
     index = size;
-    printf("2nd test:\n index %ld size %ld\n", index, size); //tester ints
+ //   printf("2nd test:\n index %ld size %ld\n", index, size); //tester ints
     if (temp[index] != '\0')
     {
         size = ft_strlen_mod(temp, '\0', index);
-        printf("3rd test:\n  index %ld\n size %ld\n", index, size); //tester ints
-        rest = malloc((size + 1) * sizeof(char));
+//        printf("3rd test:\n  index %ld\n size %ld\n", index, size); //tester ints
+		rest = malloc(100 * sizeof(char));
 /*         if (!rest)
             return (MALLOC_ERROR); */
-        ft_strlcpy_mod(rest, temp, index, '\0');
+        ft_strlcpy_mod(rest, temp, '\0', index);
 
     }
-    printf("REST:\n %s\n\n", rest); //tester rest
+//    printf("REST:\n %s\n\n", rest); //tester rest
     dest[index] = '\n'; //adicionar um enter a mais na saída do dest
     index++;
     dest[index] = '\0';
-    printf("DEST:\n %s", dest);
+//    printf("DEST:\n %s", dest);
 }
