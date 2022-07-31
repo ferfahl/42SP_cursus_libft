@@ -15,12 +15,24 @@
 
 //Libraries
 //to use malloc & free
-#include <stdlib.h>
+# include <stdlib.h>
 //to use read
-#include <unistd.h>
+# include <unistd.h>
 
 //REMOVER
 #include <stdio.h>
+
+//define BUFFER_SIZE
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1000
+# endif
+
+//define return codes
+# define READ_OK 1
+# define MALLOC_ERROR -1
+# define MALLOC_ERROR2 -2
+# define INPUT_ERROR -1
+# define NO_LINE_FEED -1
 
 //Functions
 void get_next_line(int fd); //char *

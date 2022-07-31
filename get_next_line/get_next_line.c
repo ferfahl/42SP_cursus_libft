@@ -14,11 +14,28 @@
 
 size_t	ft_strlen_mod(const char *str, char a, size_t count)
 {
-	while (str[count] != a)
+	size_t  size;
+
+    size = 0;
+    while (str[count] != a)
 	{
 		count++;
+        size++;
 	}
-	return (count);
+	return (size);
+}
+
+void	ft_strlcpy_mod(char *dest, const char *src, char a, size_t index)
+{
+	size_t	count;
+
+	count = 0;
+	while (src[index] != a)
+	{
+		dest[count] = src[index];
+        count++;
+		index++;
+	}
 }
 
 void   get_next_line(int fd) //char *
@@ -28,50 +45,44 @@ void   get_next_line(int fd) //char *
     static char *rest;
     size_t index;
     size_t size;
-    int second_index;
-    int another;
 
+    index = 0;
+    size = 0;
     //verificações de erro
     //fd < 0/
-    index = 0;
-    second_index = 0;
-    size = 0;
-    another = 0;
 /*     if (rest)
     {
         
     } */
+    printf("1st test:\n index %ld size %ld\n", index, size); //tester ints
     temp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+/*     if (!temp)
+        return (MALLOC_ERROR); */
     read(fd, temp, BUFFER_SIZE);
-    printf("%s\n", temp);
     temp[BUFFER_SIZE] = '\0';
+    printf("TEMP:\n %s\n", temp); //tester temp
     size = ft_strlen_mod(temp, '\n', index);
+    printf("2nd test:\n index %ld size %ld\n", index, size); //tester ints
     dest = malloc((size + 2) *  sizeof(char));
-    while (temp[index] != '\n')
-    {
-        dest[index] = temp[index];
-        index++;
-    }
-    printf("1 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
+/*     if (!dest)
+        return (MALLOC_ERROR); */
+    ft_strlcpy_mod(dest, temp, index, '\n');
+    printf("DEST:\n %s\n", dest);
+    index = size;
+    printf("2nd test:\n index %ld size %ld\n", index, size); //tester ints
     if (temp[index] != '\0')
     {
-        size = ft_strlen_mod(temp, '\n', index);
-        printf("2 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
+        size = ft_strlen_mod(temp, '\0', index);
+        printf("3rd test:\n  index %ld\n size %ld\n", index, size); //tester ints
         rest = malloc((size + 1) * sizeof(char));
-        printf("3 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
-        another = index;
-        printf("4 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
-        while (temp[index] != '\0')
-        {
-            rest[second_index] = temp[index];
-            index++;
-            second_index++;
-        }
-        printf("5 index %ld\n size %ld\n second_index %d\n", index, size, second_index);
+/*         if (!rest)
+            return (MALLOC_ERROR); */
+        ft_strlcpy_mod(rest, temp, index, '\0');
+
     }
-    printf("%s\n\n", rest);
-    dest[another] = '\n'; //adicionar um enter a mais na saída do dest
-    another++;
-    dest[another] = '\0';
-    printf("%s", dest);
+    printf("REST:\n %s\n\n", rest); //tester rest
+    dest[index] = '\n'; //adicionar um enter a mais na saída do dest
+    index++;
+    dest[index] = '\0';
+    printf("DEST:\n %s", dest);
 }

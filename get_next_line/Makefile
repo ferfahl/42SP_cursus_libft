@@ -7,7 +7,7 @@ OBJ = $(SRC:.c=.o)
 HEADER = get_next_line.h
 
 #static library's name
-NAME = 
+NAME = get_next_line.a
 
 #for compliling
 FLAGS = -Wall -Wextra -Werror
@@ -24,7 +24,7 @@ RM = rm -f
 $(NAME): $(OBJ) $(HEADER)
 		ar -rcs $(NAME) $(OBJ) $(HEADER)
 
-#make libft.a
+#make gnl.a
 all: $(NAME)
 
 #remove objects
