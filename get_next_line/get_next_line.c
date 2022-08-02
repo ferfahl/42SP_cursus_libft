@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 02:07:10 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/31 04:29:21 by feralves         ###   ########.fr       */
+/*   Updated: 2022/08/02 22:01:59 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,11 @@ char    *write_rest(char **rest)
  	char *temp;
     size_t index;
     size_t size;
-	int	buffer; //ssize_t - aceita sinal
+	ssize_t	buffer; //ssize_t - aceita sinal
 	
     index = 0;
     size = 0;
-    //verificações de erro
-    //fd < 0/
-    printf("1st test[rest]:\nindex %ld size %ld\n", index, size); //tester ints
     size = ft_strlen_mod(*rest, '\0', index); //defining temp as *rest
-    printf("2nd test[rest]:\nindex %ld size %ld\n", index, size); //tester ints
     temp = malloc((size + 1) * sizeof(char));
     if (!temp)
         return (MALLOC_ERROR);
@@ -74,24 +70,20 @@ char    *write_rest(char **rest)
     printf("TEMP[rest] %s\n", temp);
     ft_strlcpy_mod(temp, *rest, '\0', index);
     size = ft_strlen_mod(temp, '\n', index); //size for writing
-    printf("3rd test[rest]:\nindex %ld size %ld\n", index, size); //tester ints
     dest = malloc((size + 2) *  sizeof(char));
     if (!dest)
         return (MALLOC_ERROR);
     ft_strlcpy_mod(dest, temp, '\n', index);
     printf("DEST[rest]:\n%s\n", dest);
     index = size;
-    printf("4th test[rest]:\nindex %ld size %ld\n", index, size); //tester ints
     if (temp[index] != '\0')
     {
         size = ft_strlen_mod(temp, '\0', index);
-        printf("5th test[rest]:\nindex %ld size %ld\n", index, size); //tester ints
 		*rest = malloc((size + 1) * sizeof(char));
         if (!*rest)
             return (MALLOC_ERROR);
         ft_strlcpy_mod(*rest, temp, '\0', index + 1);
     }
-    printf("REST[rest]:\n%s\n\n", *rest); //tester rest
     dest[index] = '\n'; //adicionar um enter a mais na saída do dest
     index++;
     dest[index] = '\0'; //finalizar string
@@ -129,18 +121,35 @@ char    *ft_read(int fd, char **rest)
     char    *temp;
     char    *new;
     ssize_t buffer;
+	int	index;
 
     temp = NULL;
+	index = 0;
     new = malloc((BUFFER_SIZE + 1) * sizeof(char)); //free no new?
     if (!new)
         return (MALLOC_ERROR);
     buffer = read(fd, new, BUFFER_SIZE);
-    while (buffer > 0)
+	while (new[index] != '\n')
+	{
+		index++;
+	}
+	if (new[index] == '\n')
+	{
+		index = 0;
+		new[buffer] = '\0';
+		ft_strlcpy_mod(temp, new, '\0', index);
+		temp[buffer] = '\0';
+	}
+	else
+	{
+		new[buffer] = '\0';
+		temp = ft_strjoin(temp, new);
+		buffer = read(fd, new, BUFFER_SIZE);		
+	}
+/*     while (buffer > 0)
     {
-        new[buffer] = '\0';
-        temp = ft_strjoin(temp, new);
-        buffer = read(fd, new, BUFFER_SIZE);
-    }
+
+    } */
     return (temp);
 
 }
@@ -155,25 +164,18 @@ char    *get_first_line(int fd, char **rest)
 	
     index = 0;
     size = 0;
-    //verificações de erro
-    //fd < 0/
- 
-    printf("1st test:\nindex %ld size %ld\n", index, size); //tester ints
-    temp = ft_read(fd, rest);
+    temp = ft_read(fd, rest); //read txt
     printf("TEMP:\n%s\n", temp); //tester temp
-    size = ft_strlen_mod(temp, '\n', index);
-    printf("2nd test:\nindex %ld size %ld\n", index, size); //tester ints
+	size = ft_strlen_mod(temp, '\n', index);
     dest = malloc((size + 2) *  sizeof(char));
     if (!dest)
         return (MALLOC_ERROR);
     ft_strlcpy_mod(dest, temp, '\n', index);
     printf("DEST:\n%s\n", dest);
     index = size;
-    printf("3rd test:\nindex %ld size %ld\n", index, size); //tester ints
     if (temp[index] != '\0')
     {
         size = ft_strlen_mod(temp, '\0', index);
-        printf("4th test:\nindex %ld size %ld\n", index, size); //tester ints
 		*rest = malloc((size + 1) * sizeof(char));
         if (!*rest)
             return (MALLOC_ERROR);
@@ -191,7 +193,9 @@ char    *get_next_line(int fd)
     static char  *rest;
     char *dest;
     
-    if (rest)
+    //verificações de erro
+    //fd < 0/
+     if (rest)
         dest = write_rest(&rest);
     else
         dest = get_first_line(fd, &rest);
