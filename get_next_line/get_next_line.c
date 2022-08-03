@@ -67,14 +67,12 @@ char    *write_rest(char **rest)
     if (!temp)
         return (MALLOC_ERROR);
     temp[size] = '\0';
-    printf("TEMP[rest] %s\n", temp);
     ft_strlcpy_mod(temp, *rest, '\0', index);
     size = ft_strlen_mod(temp, '\n', index); //size for writing
     dest = malloc((size + 2) *  sizeof(char));
     if (!dest)
         return (MALLOC_ERROR);
     ft_strlcpy_mod(dest, temp, '\n', index);
-    printf("DEST[rest]:\n%s\n", dest);
     index = size;
     if (temp[index] != '\0')
     {
@@ -90,32 +88,6 @@ char    *write_rest(char **rest)
     return (dest);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*dest;
-	size_t	count;
-	size_t	index;
-
-	count = 0;
-	index = 0;
-	dest = malloc(((ft_strlen(s1) + ft_strlen(s2)) + 1) * sizeof(*dest));
-	if (!dest)
-		return (NULL);
-	while (s1 && s1[count] != '\0')
-	{
-		dest[count] = s1[count];
-		count++;
-	}
-	while (s2[index] != '\0')
-	{
-		dest[count + index] = s2[index];
-		index++;
-	}
-	dest[count + index] = '\0';
-	return (dest);
-}
-
-
 char    *ft_read(int fd, char **rest)
 {
     char    *temp;
@@ -123,33 +95,27 @@ char    *ft_read(int fd, char **rest)
     ssize_t buffer;
 	int	index;
 
-    temp = NULL;
+    temp = ft_strjoin("", *rest);
 	index = 0;
     new = malloc((BUFFER_SIZE + 1) * sizeof(char)); //free no new?
     if (!new)
         return (MALLOC_ERROR);
     buffer = read(fd, new, BUFFER_SIZE);
-	while (new[index] != '\n')
-	{
-		index++;
-	}
-	if (new[index] == '\n')
-	{
-		index = 0;
-		new[buffer] = '\0';
-		ft_strlcpy_mod(temp, new, '\0', index);
-		temp[buffer] = '\0';
-	}
-	else
-	{
-		new[buffer] = '\0';
-		temp = ft_strjoin(temp, new);
-		buffer = read(fd, new, BUFFER_SIZE);		
-	}
-/*     while (buffer > 0)
+	while (buffer > 0)
     {
-
-    } */
+        if (ft_strchr(new, '\n'))
+        {
+	    	new[buffer] = '\0';
+	    	temp = ft_strjoin(temp, new);
+            break ;
+	    }
+	    else
+	    {
+	    	new[buffer] = '\0';
+	    	temp = ft_strjoin(temp, new);
+	    	buffer = read(fd, new, BUFFER_SIZE);		
+	    }
+    }    
     return (temp);
 
 }
@@ -165,15 +131,13 @@ char    *get_first_line(int fd, char **rest)
     index = 0;
     size = 0;
     temp = ft_read(fd, rest); //read txt
-    printf("TEMP:\n%s\n", temp); //tester temp
 	size = ft_strlen_mod(temp, '\n', index);
     dest = malloc((size + 2) *  sizeof(char));
     if (!dest)
         return (MALLOC_ERROR);
     ft_strlcpy_mod(dest, temp, '\n', index);
-    printf("DEST:\n%s\n", dest);
     index = size;
-    if (temp[index] != '\0')
+    if (temp[index] != '\0' && BUFFER_SIZE > 1)
     {
         size = ft_strlen_mod(temp, '\0', index);
 		*rest = malloc((size + 1) * sizeof(char));
@@ -181,7 +145,6 @@ char    *get_first_line(int fd, char **rest)
             return (MALLOC_ERROR);
         ft_strlcpy_mod(*rest, temp, '\0', index + 1);
     }
-    printf("REST:\n%s\n\n", *rest); //tester rest
     dest[index] = '\n'; //adicionar um enter a mais na saída do dest
     index++;
     dest[index] = '\0'; //finalizar string
@@ -195,9 +158,10 @@ char    *get_next_line(int fd)
     
     //verificações de erro
     //fd < 0/
-     if (rest)
+    if (rest)
         dest = write_rest(&rest);
-    else
-        dest = get_first_line(fd, &rest);
+    else 
+        rest = ft_strjoin("", "");
+    dest = get_first_line(fd, &rest);
     return (dest);
 }

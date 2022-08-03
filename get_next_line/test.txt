@@ -1,5 +1,5 @@
-This is a tester for open and reading files
-abcdefghijklmnopqrstuvwxyz
-ABCDEFGHIJKLMNOPQRSTUVWXYZ
+This
+abcd
+ABCD
 
-1234567890
+123

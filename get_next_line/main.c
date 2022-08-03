@@ -1,12 +1,12 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 
-int main(int argc, char **argv)
+int main()
 {
     int fd;
     char *print;
 
-    fd = open(argv[1], O_RDONLY);
+    fd = open("test.txt", O_RDONLY);
     print = get_next_line(fd);
     printf("1st GNL return: %s", print);
     print = get_next_line(fd);
