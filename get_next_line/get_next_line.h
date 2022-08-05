@@ -24,7 +24,7 @@
 
 //define BUFFER_SIZE
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 4
 # endif
 
 //define return codes
@@ -36,5 +36,9 @@
 
 //Functions
 char    *get_next_line(int fd);
+char	*ft_strchr(const char *s, int c);
+char    *ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *s);
 
 #endif

@@ -26,7 +26,7 @@ size_t	ft_strlen_mod(const char *src, char a, size_t count)
 }
 
 
-size_t	ft_strlen(const char *str)
+/* size_t	ft_strlen(const char *str)
 {
 	size_t	count;
 
@@ -36,7 +36,7 @@ size_t	ft_strlen(const char *str)
 		count++;
 	}
 	return (count);
-}
+} */
 
 void	ft_strlcpy_mod(char *dest, const char *src, char a, size_t index)
 {
