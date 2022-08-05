@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/18 02:07:10 by feralves          #+#    #+#             */
-/*   Updated: 2022/08/02 22:01:59 by feralves         ###   ########.fr       */
+/*   Created: 2022/07/31 06:49:03 by feralves          #+#    #+#             */
+/*   Updated: 2022/08/05 04:33:02 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@ size_t	ft_strlen_mod(const char *src, char a, size_t count)
 	return (size);
 }
 
-
-/* size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	count = 0;
-	while (str[count] != '\0')
-	{
-		count++;
-	}
-	return (count);
-} */
-
 void	ft_strlcpy_mod(char *dest, const char *src, char a, size_t index)
 {
 	size_t	count;
@@ -52,116 +39,91 @@ void	ft_strlcpy_mod(char *dest, const char *src, char a, size_t index)
 	dest[count] = 0;
 }
 
-char    *write_rest(char **rest)
+char    *ft_read(int fd)
 {
-    char *dest;
- 	char *temp;
-    size_t index;
-    size_t size;
-	ssize_t	buffer; //ssize_t - aceita sinal
-	
-    index = 0;
-    size = 0;
-    size = ft_strlen_mod(*rest, '\0', index); //defining temp as *rest
-    temp = malloc((size + 1) * sizeof(char));
-    if (!temp)
-        return (MALLOC_ERROR);
-    temp[size] = '\0';
-    ft_strlcpy_mod(temp, *rest, '\0', index);
-    size = ft_strlen_mod(temp, '\n', index); //size for writing
-    dest = malloc((size + 2) *  sizeof(char));
-    if (!dest)
-        return (MALLOC_ERROR);
-    ft_strlcpy_mod(dest, temp, '\n', index);
-    index = size;
-    if (temp[index] != '\0')
-    {
-        size = ft_strlen_mod(temp, '\0', index);
-		*rest = malloc((size + 1) * sizeof(char));
-        if (!*rest)
-            return (MALLOC_ERROR);
-        ft_strlcpy_mod(*rest, temp, '\0', index + 1);
-    }
-    dest[index] = '\n'; //adicionar um enter a mais na saída do dest
-    index++;
-    dest[index] = '\0'; //finalizar string
-    return (dest);
-}
+	char    *the_reader;
+	char    *line_read;
+	char    *temp;
+	ssize_t buffer;
 
-char    *ft_read(int fd, char **rest)
-{
-    char    *temp;
-    char    *new;
-    ssize_t buffer;
-	int	index;
-
-    temp = ft_strjoin("", *rest);
-	index = 0;
-    new = malloc((BUFFER_SIZE + 1) * sizeof(char)); //free no new?
-    if (!new)
-        return (MALLOC_ERROR);
-    buffer = read(fd, new, BUFFER_SIZE);
+	the_reader = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!the_reader)
+		return (NULL);
+	buffer = read(fd, the_reader, BUFFER_SIZE);
+	if (buffer == -1)
+		return (free(the_reader), NULL);
+	line_read = ft_strdup("");
 	while (buffer > 0)
-    {
-        if (ft_strchr(new, '\n'))
-        {
-	    	new[buffer] = '\0';
-	    	temp = ft_strjoin(temp, new);
-            break ;
-	    }
-	    else
-	    {
-	    	new[buffer] = '\0';
-	    	temp = ft_strjoin(temp, new);
-	    	buffer = read(fd, new, BUFFER_SIZE);		
-	    }
-    }    
-    return (temp);
-
+	{
+		the_reader[buffer] = '\0';
+		temp = ft_strjoin(line_read, the_reader);
+		free(line_read);
+		line_read = temp;
+		if (ft_strchr(line_read, '\n'))
+			break ;
+		buffer = read(fd, the_reader, BUFFER_SIZE);
+	}
+	return (free(the_reader), line_read);
 }
 
-char    *get_first_line(int fd, char **rest)
+char    *ft_split_line(char *aux_temp, char **overrun)
 {
-    char *dest;
- 	char *temp;
-    size_t index;
-    size_t size; //trocar por len
-	int	buffer; //ssize_t - aceita sinal
-	
+	char *dest;
+	size_t index;
+    size_t len;
+		
     index = 0;
-    size = 0;
-    temp = ft_read(fd, rest); //read txt
-	size = ft_strlen_mod(temp, '\n', index);
-    dest = malloc((size + 2) *  sizeof(char));
+	len = ft_strlen_mod(aux_temp, '\n', index);
+    dest = malloc((len + 2) *  sizeof(char));
     if (!dest)
-        return (MALLOC_ERROR);
-    ft_strlcpy_mod(dest, temp, '\n', index);
-    index = size;
-    if (temp[index] != '\0' && BUFFER_SIZE > 1)
+        return (NULL);
+    ft_strlcpy_mod(dest, aux_temp, '\n', index);
+    index = len;
+    if (aux_temp[index] != '\0')
     {
-        size = ft_strlen_mod(temp, '\0', index);
-		*rest = malloc((size + 1) * sizeof(char));
-        if (!*rest)
-            return (MALLOC_ERROR);
-        ft_strlcpy_mod(*rest, temp, '\0', index + 1);
+        len = ft_strlen_mod(aux_temp, '\0', index);
+		*overrun = malloc((len + 1) * sizeof(char));
+        if (!*overrun)
+            return (NULL);
+        ft_strlcpy_mod(*overrun, aux_temp, '\0', index + 1);
+		overrun[0][len] = '\0';
     }
-    dest[index] = '\n'; //adicionar um enter a mais na saída do dest
+    dest[index] = '\n';
     index++;
-    dest[index] = '\0'; //finalizar string
+    dest[index] = '\0';
     return (dest);
+}
+
+char    *ft_return_line(int fd)
+{
+	char	*line_read;
+	char	*aux_temp;
+	char	*dest;
+	static char	*overrun;
+
+	if (!overrun)
+		overrun = ft_strdup("");
+	line_read = ft_read(fd);
+	aux_temp = ft_strjoin(overrun, line_read);
+	free(line_read);
+	line_read = NULL;
+	free(overrun);
+	overrun = NULL;
+	if (ft_strchr(aux_temp, '\n'))
+		dest = ft_split_line(aux_temp, &overrun);
+	else if (*aux_temp)
+		return (aux_temp);
+	else
+		return(free(aux_temp), NULL);
+	return (free(aux_temp), dest);
 }
 
 char    *get_next_line(int fd)
 {
-    static char  *rest;
-    char *dest;
-    
-    //verificações de erro
-    //fd < 0/
-    if (rest)
-        dest = write_rest(&rest);
-    else 
-        rest = ft_strjoin("", "");
-    dest = get_first_line(fd, &rest);
-    return (dest);
+	char *dest;
+	
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 999)
+		return (NULL);
+	dest = ft_return_line(fd);
+	return (dest);
 }

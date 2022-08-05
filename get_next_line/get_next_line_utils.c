@@ -6,7 +6,7 @@
 /*   By: feralves < feralves@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 02:07:07 by feralves          #+#    #+#             */
-/*   Updated: 2022/07/18 02:07:08 by feralves         ###   ########.fr       */
+/*   Updated: 2022/08/05 04:18:03 by feralves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ char    *ft_strjoin(char *s1, char *s2)
         if (!new_str)
             return (NULL);
         while (s2[len_s2])
-            new_str[len_s2] = s2[len_s2++];
+		{
+            new_str[len_s2] = s2[len_s2];
+			len_s2++;
+		}
         return (new_str);
     }
     len_total = (ft_strlen(s1) + ft_strlen(s2)) + 1;
