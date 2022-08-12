@@ -1,2 +1,2 @@
 # 42SP_cursus
-Projects made by me at 42SP.
+library for the first project @42sp
