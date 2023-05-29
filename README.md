@@ -1,7 +1,9 @@
 # 42SP_libft
 library for the first project @42sp
 
-[![feralves's 42 Libft Score](https://badge42.vercel.app/api/v2/cli7l4sim001108mvngbgwmeh/project/2605160)](https://github.com/JaeSeoKim/badge42)
+<div align="center">
+  <a href="https://github.com/JaeSeoKim/badge42"><img src="https://badge42.vercel.app/api/v2/cli7l4sim001108mvngbgwmeh/project/2605160" alt="feralves's 42 Libft Score" /></a>
+</div>
 
 Summary:
 This project is about coding a C library.
